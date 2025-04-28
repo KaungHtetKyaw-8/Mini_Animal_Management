@@ -2,6 +2,9 @@ package com.example.demo_db_relation.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class FoodItem {
 
@@ -18,19 +21,13 @@ public class FoodItem {
     private Supplier supplier;
 
     @ManyToMany(mappedBy = "foodItem")
-    private Animal animal;
+    private List<Animal> animal = new ArrayList<>();
 
     public FoodItem() {
     }
 
-    public FoodItem(String foodName, Supplier supplier) {
+    public FoodItem(String foodName) {
         this.foodName = foodName;
-        this.supplier = supplier;
-    }
-
-    public void addSupplier(Supplier supplier){
-        supplier.setFoodItem(this);
-        this.supplier = supplier;
     }
 
     public Integer getFoodId() {
@@ -55,5 +52,22 @@ public class FoodItem {
 
     public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
+    }
+
+    public List<Animal> getAnimal() {
+        return animal;
+    }
+
+    public void setAnimal(List<Animal> animal) {
+        this.animal = animal;
+    }
+
+    @Override
+    public String toString() {
+        return "FoodItem{" +
+                "foodId=" + foodId +
+                ", foodName='" + foodName + '\'' +
+                ", supplier=" + supplier +
+                '}';
     }
 }

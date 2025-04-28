@@ -2,6 +2,9 @@ package com.example.demo_db_relation.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Category {
 
@@ -14,13 +17,18 @@ public class Category {
     private String categoryType;
 
     @OneToMany(mappedBy = "category",cascade = CascadeType.PERSIST)
-    private Animal animal;
+    private List<Animal> animal = new ArrayList<>();
 
     public Category() {
     }
 
     public Category(String categoryType) {
         this.categoryType = categoryType;
+    }
+
+    public void addAnimal(Animal animal){
+        animal.setCategory(this);
+        this.animal.add(animal);
     }
 
     public Integer getCategoryId() {
@@ -39,11 +47,20 @@ public class Category {
         this.categoryType = categoryType;
     }
 
-    public Animal getAnimal() {
+    public List<Animal> getAnimal() {
         return animal;
     }
 
-    public void setAnimal(Animal animal) {
+    public void setAnimal(List<Animal> animal) {
         this.animal = animal;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "categoryId=" + categoryId +
+                ", categoryType='" + categoryType + '\'' +
+                ", animal=" + animal +
+                '}';
     }
 }

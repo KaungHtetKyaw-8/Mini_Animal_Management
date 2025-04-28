@@ -2,6 +2,9 @@ package com.example.demo_db_relation.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Animal {
 
@@ -16,14 +19,15 @@ public class Animal {
     @Column(name = "Total_Number")
     private int totalNumber;
 
-    @OneToOne(mappedBy = "animal")
+    @OneToOne(mappedBy = "animal",cascade = CascadeType.PERSIST)
     private Cage cage;
 
     @ManyToOne
+    @JoinColumn(name = "Category_Id")
     private Category category;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    private FoodItem foodItem;
+    @ManyToMany
+    private List<FoodItem> foodItem = new ArrayList<>();
 
     public Animal() {
     }
@@ -33,10 +37,16 @@ public class Animal {
         this.totalNumber = totalNumber;
     }
 
-    public void addCategory(Category category){
-        category.setAnimal(this);
-        this.category = category;
+    public void addFoodItem(FoodItem foodItem){
+        foodItem.getAnimal().add(this);
+        this.foodItem.add(foodItem);
     }
+
+    public void addCage(Cage cage){
+        cage.setAnimal(this);
+        this.cage = cage;
+    }
+
 
     public Integer getAnimalId() {
         return animalId;
@@ -76,5 +86,16 @@ public class Animal {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "animalId=" + animalId +
+                ", type='" + type + '\'' +
+                ", totalNumber=" + totalNumber +
+                ", cage=" + cage +
+                ", foodItem=" + foodItem +
+                '}';
     }
 }

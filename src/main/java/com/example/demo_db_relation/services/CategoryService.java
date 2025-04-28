@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class CategoryService {
 
@@ -20,5 +22,10 @@ public class CategoryService {
     @Transactional
     public Category getCategoryByName(String name){
         return categoryRepository.findByCategoryType(name);
+    }
+
+    @Transactional
+    public List<Category> getAll(){
+        return categoryRepository.findAll();
     }
 }

@@ -16,7 +16,7 @@ public class Cage {
     @Column(name = "Location")
     private String location;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne
     @JoinColumn(name = "Animal_Id")
     private Animal animal;
 
@@ -63,5 +63,14 @@ public class Cage {
 
     public void setAnimal(Animal animal) {
         this.animal = animal;
+    }
+
+    @Override
+    public String toString() {
+        return "Cage{" +
+                "cageId=" + cageId +
+                ", cageNo=" + cageNo +
+                ", location='" + location + '\'' +
+                '}';
     }
 }

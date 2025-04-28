@@ -2,6 +2,9 @@ package com.example.demo_db_relation.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Supplier {
 
@@ -20,7 +23,7 @@ public class Supplier {
     private String address;
 
     @OneToMany(mappedBy = "supplier",cascade = CascadeType.PERSIST)
-    private FoodItem foodItem;
+    private List<FoodItem> foodItem = new ArrayList<>();
 
     public Supplier() {
     }
@@ -29,6 +32,11 @@ public class Supplier {
         this.supplierName = supplierName;
         this.contactNo = contactNo;
         this.address = address;
+    }
+
+    public void addFoodItem(FoodItem foodItem){
+        foodItem.setSupplier(this);
+        this.foodItem.add(foodItem);
     }
 
     public Integer getSupplierId() {
@@ -63,11 +71,21 @@ public class Supplier {
         this.address = address;
     }
 
-    public FoodItem getFoodItem() {
+    public List<FoodItem> getFoodItem() {
         return foodItem;
     }
 
-    public void setFoodItem(FoodItem foodItem) {
+    public void setFoodItem(List<FoodItem> foodItem) {
         this.foodItem = foodItem;
+    }
+
+    @Override
+    public String toString() {
+        return "Supplier{" +
+                "supplierId=" + supplierId +
+                ", supplierName='" + supplierName + '\'' +
+                ", contactNo='" + contactNo + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

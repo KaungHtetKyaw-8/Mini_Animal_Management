@@ -1,5 +1,6 @@
 package com.example.demo_db_relation.services;
 
+import com.example.demo_db_relation.entities.Cage;
 import com.example.demo_db_relation.repository.CageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ public class CageService {
     private CageRepository cageRepository;
 
     @Transactional
-    public void createData(){
-
+    public void setCage(Cage cage){
+        cageRepository.save(cage);
     }
 }
